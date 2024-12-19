@@ -117,9 +117,9 @@ def grandezza_schermo():
         x = input("continuare? S/N: ")
 
 
-#preset()
+preset()
 #gioco(0,0,0,0)
-grandezza_schermo()
+#grandezza_schermo()
 
 
 
