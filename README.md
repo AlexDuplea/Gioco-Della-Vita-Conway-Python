@@ -5,7 +5,9 @@ Esecuzione del Programma
 
 Per ottenere i migliori risultati, eseguite il codice direttamente nel terminale.
 Istruzioni per l'esecuzione:
+
   -Windows:
+  
     -Aprite PowerShell
     -Navigate alla directory contenenye il file LA_CITA.py con il comando:
       -cd <percorso_della_cartella>
@@ -15,6 +17,7 @@ Istruzioni per l'esecuzione:
       -python LA_CITA.py 
 
   -Mac/Linux:
+  
     -Aprite il terminale
     -Navigate alla directory contenente il file LA_CITA.py con il comando:
       -cd <percorso_della_cartella>
