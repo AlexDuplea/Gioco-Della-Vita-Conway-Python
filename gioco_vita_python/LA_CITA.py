@@ -116,10 +116,100 @@ def grandezza_schermo():
             print(" ".join(riga))
         x = input("continuare? S/N: ")
 
+def converti_bitmap(lista):
+    lista_bitmap = []
+    for riga in lista:
+        nuova_riga = []
+        for elemento in riga:
+            if elemento == " ":
+                nuova_riga.append(0)
+            elif elemento == "\u25a0":
+                nuova_riga.append(1)
+        lista_bitmap.append(nuova_riga)
+    return lista_bitmap
 
-preset()
+def converti_per_terminale(lista):
+    lista_terminale = []
+    for riga in lista:
+        nuova_riga = []
+        for elemento in riga:
+            if elemento == 0:
+                nuova_riga.append(" ")
+            elif elemento == 1:
+                nuova_riga.append("\u25a0")
+        lista_terminale.append(nuova_riga)
+    return lista_terminale
+
+def salva_griglia(dizionario,filename2):
+    with open(filename2, "w") as file2:
+        json.dump(dizionario, file2)
+
+def fetch_iterazione(n_generazione,filename):
+    with open(filename, "r") as file1:
+        data = json.load(file1)
+
+        l_imp = data[str(n_generazione)]
+
+        return l_imp
+
+def tester(altezza, lunghezza, ng_test, nr_test,numero_iterazioni):
+    dictio = {}
+    for iterazioni in range(numero_iterazioni):
+
+        clear_screen()
+        lim = get_check(altezza, lunghezza)
+        cord = [(i, j) for i in range(altezza) for j in range(lunghezza)]
+
+        lim = genera_vita(lim, cord, nr_test)
+
+        dictio[iterazioni] = converti_bitmap(lim)
+
+        for i in range(ng_test):
+            move_cursor_top()
+            l3 = get_check(altezza, lunghezza)
+
+            for xi in range(altezza):
+                for yi in range(lunghezza):
+                    n_vita = conta_vita(xi, yi, lim, altezza, lunghezza)
+                    l3 = calcolo_vita(lim, xi, yi, n_vita, l3)
+
+            lim = l3
+
+            for riga in lim:
+                print(" ".join(riga))
+            print()
+            # sennò è troppo veloce e non si può capire granché
+            #time.sleep(0.08)
+
+    salva_griglia(dictio,"test.json")
+    fetch_input = input("desideri salvare un iterazione? Se si, inserisci il numero della iterazione (ricorda che partono da 0)\n")
+    fetch = fetch_iterazione(fetch_input,"test.json")
+    outfile = open("test2.json", "r")
+    dati = json.load(outfile)
+    if len(dati) > 0:
+        n = int(list(dati.keys())[-1])
+        dati[n+1] = fetch
+    elif len(dati) == 0:
+        dati[0] = fetch
+    else:
+        print("Errore di lettura")
+    salva_griglia(dati,"test2.json")
+    outfile.close()
+
+
+
+
+
+
+
+
+
+
+
+#preset()
 #gioco(0,0,0,0)
 #grandezza_schermo()
+#tester(39,78,100,600,10)
 
 
 
